@@ -252,10 +252,12 @@ public class Console {
 	}
 
 	private Boat getChosenBoat(Member member) {
+		//TODO
 		return null;
 	}
 
 	private boatType getTypeFromInput() {
+		//TODO
 		return null;
 	}
 
