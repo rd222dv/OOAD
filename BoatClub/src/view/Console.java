@@ -142,7 +142,9 @@ public class Console {
 		if (errorHandler.isInteger(input) && errorHandler.isOptionInput(input)) {
 			viewMember(Integer.parseInt(input));
 		}
+		else {
 		//TODO
+		}
 			
 	}
 	
@@ -222,7 +224,7 @@ public class Console {
 			System.out.println("\n------------------------------" 
 					+ "\nSelect one of the following choices:"
 					+ "\n 1 View Boat" + "\n 2 Add Boat" 
-					+ "\n 4 Return ");
+					+ "\n 3 Return ");
 			
 			System.out.print("\n>");
 			String input = sc.next();
@@ -259,8 +261,9 @@ public class Console {
 		if (errorHandler.isInteger(input) && errorHandler.isOptionInput(input)) {
 			viewBoat(Integer.parseInt(input));
 		}
-		
+		else {
 		//TODO
+		}
 	}
 	
 	/**
@@ -295,7 +298,7 @@ public class Console {
 			if (errorHandler.isInteger(size)) {
 				registry.addBoat(Boat.boatType.valueOf(type.toLowerCase()), Double.parseDouble(size));
 				System.out.println("Boat successfully added!");
-				viewBoatListWindow();
+				welcomeWindow();
 			}
 			else {
 				System.out.println("Please input a boat size as an integer!");
