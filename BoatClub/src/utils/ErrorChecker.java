@@ -1,5 +1,6 @@
 package utils;
 
+import model.Boat;
 
 public class ErrorChecker {
 	
