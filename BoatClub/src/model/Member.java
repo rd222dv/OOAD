@@ -11,11 +11,9 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "Member")
-@XmlType(propOrder = {"name", "surname", "personnumber", "memberId", "numberOfBoats", "boatList"})
+@XmlType(propOrder = {"name", "personnumber", "memberId", "numberOfBoats", "boatList"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Member {
 	@XmlTransient
@@ -24,7 +22,7 @@ public class Member {
 	@XmlElement(name = "MemberName")
 	private String name;
 	@XmlElement(name = "PersonalNum")
-	private String personnumber;
+	private int personnumber;
 	@XmlElement(name = "MemberID")
 	private int memberId;
 	@XmlElement(name = "BoatNum")
@@ -32,10 +30,14 @@ public class Member {
 	@XmlElement(name = "BoatList")
 	private List<Boat> boatList = new ArrayList<Boat>();
 
-	public Member(String name, String personnumber, int memberId) throws ParseException {
+	public Member(String name, int personnumber, int memberId) throws ParseException {
 		this.name = name;
 		this.personnumber = personnumber;
 		this.memberId = memberId;
+	}
+	
+	public Member() {
+		
 	}
 
 	public String getName() {
@@ -46,11 +48,11 @@ public class Member {
 		this.name = name;
 	}
 
-	public String getPersonnumber() {
+	public int getPersonnumber() {
 		return personnumber;
 	}
 
-	public void setPersonnumber(String personnumber) {
+	public void setPersonnumber(int personnumber) {
 		this.personnumber = personnumber;
 	}
 

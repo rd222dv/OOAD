@@ -2,12 +2,13 @@ package model;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
 
 import utils.FileUtil;
 
 public class Registry {
 	
-	private MemberCatalog members = new MemberCatalog();
+	private MemberCatalog members;
 	private Member currentMember;
 	private FileUtil fileUtil = new FileUtil();
 	private File file;
@@ -19,7 +20,7 @@ public class Registry {
 			if (!file.exists()) {
 				fileUtil.saveRegistry(members, file);
 			}
-			fileUtil.loadRegistry(file);
+			members = fileUtil.loadRegistry(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -29,7 +30,11 @@ public class Registry {
 		this.currentMember = member;
 	}
 	
-	public void addMember(String name, String personnumber) throws ParseException {
+	public List<Member> getMemberList() {
+		return members.getMemberList();
+	}
+	
+	public void addMember(String name, int personnumber) throws ParseException {
 		members.addMember(name, personnumber);
 		setCurrentMember(members.getMemberList().get(members.getMemberList().size()-1));
 		try {
@@ -76,7 +81,7 @@ public class Registry {
 		}
 	}
 	
-	public void updateMember (Member currentMember, String name, String personnumber) throws ParseException {
+	public void updateMember (Member currentMember, String name, int personnumber) throws ParseException {
 		members.updateMember(currentMember, name, personnumber);
 		try {
 			fileUtil.saveRegistry(members, file);

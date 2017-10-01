@@ -1,7 +1,5 @@
 package main;
 
-import model.MemberCatalog;
-import utils.ConsoleHandler;
 import view.Console;
 
 public class Main {
@@ -10,7 +8,5 @@ public class Main {
 		Console console = new Console();
 
 	    console.welcomeMessage();
-	    console.welcomeOptions();
-
 	}
 }
