@@ -8,7 +8,7 @@ import utils.FileUtil;
 
 public class Registry {
 	
-	private MemberCatalog members;
+	private MemberCatalog members = new MemberCatalog();
 	private Member currentMember;
 	private FileUtil fileUtil = new FileUtil();
 	private File file;
