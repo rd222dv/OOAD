@@ -16,7 +16,6 @@ public class ConsoleOptions {
 			System.out.println("Invalid choice! Chose from 1 to 3!");
 	}
 	
-	
 	public void memberListOptions(int selection, Console console) {
 		if (selection == 1) {
 			console.viewMemberWindow();
@@ -24,7 +23,6 @@ public class ConsoleOptions {
 			console.welcomeWindow();
 		} else
 			System.out.println("Invalid choice! Try again ");
-
 	}
 	
 	public void memberOptions(int selection, Console console) {
@@ -33,7 +31,7 @@ public class ConsoleOptions {
 		} else if (selection == 2) {
 			console.removeMemberWindow();
 		} else if (selection == 3) {
-			console.viewBoatsWindow();
+			console.viewBoatListWindow();
 		} else if (selection == 4) {
 			console.viewMemberWindow();
 		} else {
@@ -43,20 +41,35 @@ public class ConsoleOptions {
 	
 	public void viewBoatOptions(int selection, Console console) {
 		if (selection == 1) {
-			console.addBoatWindow();
+			console.editBoatWindow();
 		} else if (selection == 2) {
-			System.out.println("Edit Boat...");
-			// TODO
+			console.removeBoatWindow();
 		} else if (selection == 3) {
-			System.out.println("Remove Boat...");
-			// TODO
-		} else if (selection == 4) {
-			System.out.println("return...");
-
-		} else
+			console.viewMemberWindow();
+		} else {
 			System.out.println("Invalid choice! Try again ");
+		}
 	}
 	
+	public void viewBoatListOptions(int selection, Console console) {
+		if (selection == 1) {
+			console.viewBoatWindow();
+		} else if (selection == 2) {
+			console.addBoatWindow();
+		} else if (selection == 3) {
+			console.viewMemberWindow();
+		} else {
+			System.out.println("Invalid choice! Try again ");
+		}
+	}
 	
-	
+	public void viewBoatListEmptyOptions(int selection, Console console) {
+		if (selection == 1) {
+			console.addBoatWindow();
+		} else if (selection == 2) {
+			console.viewMemberWindow();;
+		} else {
+			System.out.println("Invalid choice! Try again ");
+		}
+	}
 }

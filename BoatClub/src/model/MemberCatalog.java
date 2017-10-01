@@ -32,14 +32,14 @@ public class MemberCatalog {
 		this.memberList = memberCatalog;
 	}
 	
-	public void addMember(String name, double personnumber) throws ParseException {
+	public void addMember(String name, String personnumber) throws ParseException {
 		int id = getMemberList().size() + 1;
 		this.memberList.add(new Member(name, personnumber,  id));
 	}
 
-	public void updateMember(Member currentMember, String name, double personnumber) throws ParseException { // FIXME not sure if this is enough
+	public void updateMember(Member currentMember, String name, String personnumber) throws ParseException { // FIXME not sure if this is enough
+		int id = currentMember.getMemberId();
 		memberList.remove(currentMember);
-		int id = getMemberList().size() + 1;
 		memberList.add(new Member(name, personnumber, id));
 	}
 

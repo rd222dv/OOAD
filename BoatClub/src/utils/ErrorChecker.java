@@ -1,7 +1,5 @@
 package utils;
 
-import model.Boat;
-
 public class ErrorChecker {
 	
 	public boolean isInteger (String input) {
@@ -40,7 +38,7 @@ public class ErrorChecker {
 	
 	public boolean isValidType (String input) {
 		String type = input.toLowerCase();
-		String[] types = {"sailboat", "s", "motorsailer", "m", "canoe", "c", "other", "o"};
+		String[] types = {"sailboat", "motorsailer", "canoe", "other"};
 		for (int i = 0; i< types.length; i++) {
 			if (type.equals(types[i])) {
 				return true;

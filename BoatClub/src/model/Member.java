@@ -22,7 +22,7 @@ public class Member {
 	@XmlElement(name = "MemberName")
 	private String name;
 	@XmlElement(name = "PersonalNum")
-	private double personnumber;
+	private String personnumber;
 	@XmlElement(name = "MemberID")
 	private int memberId;
 	@XmlElement(name = "BoatNum")
@@ -30,7 +30,7 @@ public class Member {
 	@XmlElement(name = "BoatList")
 	private List<Boat> boatList = new ArrayList<Boat>();
 
-	public Member(String name, double personnumber, int memberId) throws ParseException {
+	public Member(String name, String personnumber, int memberId) throws ParseException {
 		this.name = name;
 		this.personnumber = personnumber;
 		this.memberId = memberId;
@@ -48,11 +48,11 @@ public class Member {
 		this.name = name;
 	}
 
-	public double getPersonnumber() {
+	public String getPersonnumber() {
 		return personnumber;
 	}
 
-	public void setPersonnumber(int personnumber) {
+	public void setPersonnumber(String personnumber) {
 		this.personnumber = personnumber;
 	}
 
