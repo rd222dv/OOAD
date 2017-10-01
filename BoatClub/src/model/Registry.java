@@ -30,8 +30,20 @@ public class Registry {
 		this.currentMember = member;
 	}
 	
+	public Member getCurrentMember() {
+		return currentMember;
+	}
+	
 	public List<Member> getMemberList() {
 		return members.getMemberList();
+	}
+	
+	public boolean isEmptyMembers() {
+		return getMemberList().isEmpty();
+	}
+	
+	public boolean isEmptyBoats() {
+		return currentMember.getBoatList().isEmpty();
 	}
 	
 	public void addMember(String name, int personnumber) throws ParseException {
@@ -72,8 +84,14 @@ public class Registry {
 		}
 	}
 	
-	public void removeMember (Member member) {
-		members.removeMember(member);
+	public void removeMember () {
+		members.removeMember(currentMember);
+		if (!isEmptyMembers()) {
+			currentMember = getMemberList().get(getMemberList().size()-1);
+		}
+		else {
+			currentMember = null;
+		}
 		try {
 			fileUtil.saveRegistry(members, file);
 		} catch (Exception e) {
@@ -81,7 +99,7 @@ public class Registry {
 		}
 	}
 	
-	public void updateMember (Member currentMember, String name, int personnumber) throws ParseException {
+	public void updateMember (String name, double personnumber) throws ParseException {
 		members.updateMember(currentMember, name, personnumber);
 		try {
 			fileUtil.saveRegistry(members, file);
