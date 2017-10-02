@@ -33,7 +33,7 @@ public class ConsoleOptions {
 		} else if (selection == 3) {
 			console.viewBoatListWindow();
 		} else if (selection == 4) {
-			console.viewMemberWindow();
+			console.welcomeWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
 		}
@@ -45,7 +45,7 @@ public class ConsoleOptions {
 		} else if (selection == 2) {
 			console.removeBoatWindow();
 		} else if (selection == 3) {
-			console.viewMemberWindow();
+			console.welcomeWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
 		}

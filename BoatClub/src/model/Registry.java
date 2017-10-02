@@ -9,7 +9,7 @@ import utils.FileUtil;
 public class Registry {
 	
 	private MemberCatalog members = new MemberCatalog();
-	private Member currentMember;
+	private Member currentMember = new Member();
 	private FileUtil fileUtil = new FileUtil();
 	private File file;
 	
@@ -36,6 +36,10 @@ public class Registry {
 	
 	public List<Member> getMemberList() {
 		return members.getMemberList();
+	}
+	
+	public List<Boat> getBoatList() {
+		return currentMember.getBoatList();
 	}
 	
 	public boolean isEmptyMembers() {
@@ -115,7 +119,4 @@ public class Registry {
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }

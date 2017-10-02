@@ -6,6 +6,7 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -33,7 +34,7 @@ public class Member {
 	public Member(String name, String personnumber, int memberId) throws ParseException {
 		this.name = name;
 		this.personnumber = personnumber;
-		this.memberId = memberId;
+		this.memberId = memberId;	
 	}
 	
 	public Member() {
@@ -65,7 +66,7 @@ public class Member {
 	}
 
 	public int getNumberOfBoats() {
-		return numberOfBoats;
+		return boatList.size();
 	}
 
 	public void setNumberOfBoats(int numberOfBoats) {
@@ -79,14 +80,15 @@ public class Member {
 	public Boat getCurrentBoat () {
 		return currentBoat;
 	}
+	
 	public List<Boat> getBoatList() {
 		return boatList;
 	}
-
-	public void setBoatList(ArrayList<Boat> boatCatalog) {
-		this.boatList = boatCatalog;
+/*
+	public void setBoatList(ArrayList<Boat> boatList) {
+		this.boatList = boatList;
 	}
-
+*/
 	public void addBoat(Boat.boatType type, double size) {
 		boatList.add(new Boat(type, size));
 	}
@@ -99,4 +101,5 @@ public class Member {
 	public void removeBoat(Boat boat) {
 		boatList.remove(boat);
 	}
+	
 }
