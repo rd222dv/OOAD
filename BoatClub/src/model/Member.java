@@ -11,11 +11,9 @@ import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
 
 import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.List;
 
 @XmlRootElement(name = "Member")
-@XmlType(propOrder = {"name", "surname", "personnumber", "memberId", "numberOfBoats", "boatList"})
+@XmlType(propOrder = {"name", "personnumber", "memberId", "numberOfBoats", "boatList"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Member {
 	@XmlTransient
@@ -35,7 +33,11 @@ public class Member {
 	public Member(String name, String personnumber, int memberId) throws ParseException {
 		this.name = name;
 		this.personnumber = personnumber;
-		this.memberId = memberId;
+		this.memberId = memberId;	
+	}
+	
+	public Member() {
+		
 	}
 
 	public String getName() {
@@ -63,7 +65,7 @@ public class Member {
 	}
 
 	public int getNumberOfBoats() {
-		return numberOfBoats;
+		return boatList.size();
 	}
 
 	public void setNumberOfBoats(int numberOfBoats) {
@@ -77,14 +79,11 @@ public class Member {
 	public Boat getCurrentBoat () {
 		return currentBoat;
 	}
+	
 	public List<Boat> getBoatList() {
 		return boatList;
 	}
-
-	public void setBoatList(ArrayList<Boat> boatCatalog) {
-		this.boatList = boatCatalog;
-	}
-
+	
 	public void addBoat(Boat.boatType type, double size) {
 		boatList.add(new Boat(type, size));
 	}
@@ -97,4 +96,5 @@ public class Member {
 	public void removeBoat(Boat boat) {
 		boatList.remove(boat);
 	}
+	
 }

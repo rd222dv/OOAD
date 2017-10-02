@@ -2,13 +2,14 @@ package model;
 
 import java.io.File;
 import java.text.ParseException;
+import java.util.List;
 
 import utils.FileUtil;
 
 public class Registry {
 	
 	private MemberCatalog members = new MemberCatalog();
-	private Member currentMember;
+	private Member currentMember = new Member();
 	private FileUtil fileUtil = new FileUtil();
 	private File file;
 	
@@ -19,7 +20,7 @@ public class Registry {
 			if (!file.exists()) {
 				fileUtil.saveRegistry(members, file);
 			}
-			fileUtil.loadRegistry(file);
+			members = fileUtil.loadRegistry(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -27,6 +28,34 @@ public class Registry {
 	
 	public void setCurrentMember(Member member) {
 		this.currentMember = member;
+	}
+	
+	public Member getCurrentMember() {
+		return currentMember;
+	}
+	
+	public List<Member> getMemberList() {
+		return members.getMemberList();
+	}
+	
+	public List<Boat> getBoatList() {
+		return currentMember.getBoatList();
+	}
+	
+	public boolean isEmptyMembers() {
+		return getMemberList().isEmpty();
+	}
+	
+	public boolean isEmptyBoats() {
+		return currentMember.getBoatList().isEmpty();
+	}
+	
+	public void setCurrentBoat(Boat boat) {
+		currentMember.setCurrentBoat(boat);
+	}
+	
+	public Boat getCurrentBoat() {
+		return currentMember.getCurrentBoat();
 	}
 	
 	public void addMember(String name, String personnumber) throws ParseException {
@@ -58,8 +87,8 @@ public class Registry {
 		}
 	}
 	
-	public void removeBoat (Boat boat) {
-		currentMember.removeBoat(boat);
+	public void removeBoat () {
+		currentMember.removeBoat(currentMember.getCurrentBoat());
 		try {
 			fileUtil.saveRegistry(members, file);
 		} catch (Exception e) {
@@ -67,8 +96,14 @@ public class Registry {
 		}
 	}
 	
-	public void removeMember (Member member) {
-		members.removeMember(member);
+	public void removeMember () {
+		members.removeMember(currentMember);
+		if (!isEmptyMembers()) {
+			currentMember = getMemberList().get(getMemberList().size()-1);
+		}
+		else {
+			currentMember = null;
+		}
 		try {
 			fileUtil.saveRegistry(members, file);
 		} catch (Exception e) {
@@ -76,7 +111,7 @@ public class Registry {
 		}
 	}
 	
-	public void updateMember (Member currentMember, String name, String personnumber) throws ParseException {
+	public void updateMember (String name, String personnumber) throws ParseException {
 		members.updateMember(currentMember, name, personnumber);
 		try {
 			fileUtil.saveRegistry(members, file);
@@ -84,7 +119,4 @@ public class Registry {
 			e.printStackTrace();
 		}
 	}
-	
-	
-
 }

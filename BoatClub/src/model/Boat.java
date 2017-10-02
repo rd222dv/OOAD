@@ -17,7 +17,7 @@ public class Boat {
 	private double size;
 
 	public enum boatType {
-		Sailboat, Motorsailer, Canoe, Other
+		sailboat, motorsailer, canoe, other
 	}
 
 	public Boat() {
@@ -43,4 +43,10 @@ public class Boat {
 	public void setType(boatType type) {
 		this.type = type;
 	}
+	public String toString(){
+        StringBuilder sb = new StringBuilder();
+        sb.append("Type: " + this.type + " - Size: " + this.size);
+        return sb.toString();
+    }
+
 }
