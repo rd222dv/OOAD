@@ -1,11 +1,9 @@
 package view;
 
 import java.text.ParseException;
-import java.util.ArrayList;
 import java.util.Scanner;
 
 import model.Boat;
-import model.Member;
 import model.Registry;
 import utils.ErrorChecker;
 
@@ -177,7 +175,7 @@ public class Console {
 	 */
 	private void printMemberInfo() {
 		System.out.println("\nMember ID: " + registry.getCurrentMember().getMemberId());
-		System.out.printf("Name: " + registry.getCurrentMember().getName() + "\t Personal number: "
+		System.out.println("Name: " + registry.getCurrentMember().getName() + "\t Personal number: "
 				+ registry.getCurrentMember().getPersonnumber() + "\t Number of Boats: "
 				+ registry.getCurrentMember().getNumberOfBoats());
 		viewBoatList();
@@ -333,9 +331,10 @@ public class Console {
 	 * Helper method to print boat list
 	 */
 	private void viewBoatList() {
-		for (int i = 0; i < registry.getCurrentMember().getBoatList().size(); i++) {
+		System.out.println("Boat list: ");
+		for (int i = 0; i < registry.getBoatList().size(); i++) {
 			System.out.println((i + 1) + " Type: " + registry.getCurrentMember().getBoatList().get(i).getType()
-					+ " Size: " + registry.getCurrentMember().getBoatList().get(i).getSize() + "\n");
+					+ " Size: " + registry.getCurrentMember().getBoatList().get(i).getSize());
 		}
 	}
 
@@ -358,7 +357,6 @@ public class Console {
 	/**
 	 * Prints out verbose list
 	 */
-	// TODO fixed but output maybe ugly :P
 	private void viewVerboseList() {
 		for (int i = 0; i < registry.getMemberList().size(); i++) 
 			System.out.println((i + 1) + " Name: " + registry.getMemberList().get(i).getName() + "\t Personal number: "

@@ -6,7 +6,6 @@ import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlElement;
-import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -84,11 +83,7 @@ public class Member {
 	public List<Boat> getBoatList() {
 		return boatList;
 	}
-/*
-	public void setBoatList(ArrayList<Boat> boatList) {
-		this.boatList = boatList;
-	}
-*/
+	
 	public void addBoat(Boat.boatType type, double size) {
 		boatList.add(new Boat(type, size));
 	}

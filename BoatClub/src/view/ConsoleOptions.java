@@ -12,8 +12,10 @@ public class ConsoleOptions {
 			console.viewCompactWindow();
 		} else if (selection == 3) {
 			console.viewVerboseWindow();
-		} else
+		} else {
 			System.out.println("Invalid choice! Chose from 1 to 3!");
+			console.welcomeWindow();
+		}
 	}
 	
 	public void memberListOptions(int selection, Console console) {
@@ -21,8 +23,10 @@ public class ConsoleOptions {
 			console.viewMemberWindow();
 		} else if (selection == 2) {
 			console.welcomeWindow();
-		} else
+		} else {
 			System.out.println("Invalid choice! Try again ");
+			console.welcomeWindow();
+		}
 	}
 	
 	public void memberOptions(int selection, Console console) {
@@ -36,6 +40,7 @@ public class ConsoleOptions {
 			console.welcomeWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
+			console.welcomeWindow();
 		}
 	}
 	
@@ -48,6 +53,7 @@ public class ConsoleOptions {
 			console.welcomeWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
+			console.viewBoatListWindow();
 		}
 	}
 	
@@ -60,6 +66,7 @@ public class ConsoleOptions {
 			console.viewMemberWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
+			console.viewBoatListWindow();
 		}
 	}
 	
@@ -70,6 +77,7 @@ public class ConsoleOptions {
 			console.viewMemberWindow();;
 		} else {
 			System.out.println("Invalid choice! Try again ");
+			console.viewBoatListWindow();
 		}
 	}
 }
