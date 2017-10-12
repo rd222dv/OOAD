@@ -42,4 +42,20 @@
         <MemberID>5</MemberID>
         <BoatNum>0</BoatNum>
     </MemberList>
+    <MemberList>
+        <MemberName>slkdafj sd;lkfj</MemberName>
+        <PersonalNum>155544778888</PersonalNum>
+        <MemberID>6</MemberID>
+        <BoatNum>0</BoatNum>
+    </MemberList>
+    <MemberList>
+        <MemberName>lkdsf;j s;ldjf</MemberName>
+        <PersonalNum>122233445555</PersonalNum>
+        <MemberID>7</MemberID>
+        <BoatNum>0</BoatNum>
+        <BoatList>
+            <BoatType>motorsailer</BoatType>
+            <BoatSize>14.0</BoatSize>
+        </BoatList>
+    </MemberList>
 </MemberCatalog>
