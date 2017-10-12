@@ -17,7 +17,7 @@ public class Boat {
 	private double size;
 
 	public enum boatType {
-		sailboat, motorsailer, canoe, other
+		SAILBOAT, MOTORSAILER, CANOE, OTHER
 	}
 
 	public Boat() {

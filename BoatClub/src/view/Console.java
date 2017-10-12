@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import model.Boat;
 import model.Registry;
-import utils.ErrorChecker;
 
 public class Console {
 
