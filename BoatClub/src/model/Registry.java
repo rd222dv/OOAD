@@ -8,7 +8,7 @@ public class Registry {
 	
 	private MemberCatalog members = new MemberCatalog();
 	private Member currentMember = new Member();
-	private MembersDAO fileUtil = new MembersDAO();
+	private MembersDAO dao = new MembersDAO();
 	private File file;
 	
 	/**
@@ -21,9 +21,9 @@ public class Registry {
 		try {
 			// Checks if file exists. If not, xml with proper tags should be created.
 			if (!file.exists()) {
-				fileUtil.saveRegistry(members, file);
+				dao.saveRegistry(members, file);
 			}
-			members = fileUtil.loadRegistry(file);
+			members = dao.loadRegistry(file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,7 +75,7 @@ public class Registry {
 		members.addMember(name, personnumber);
 		setCurrentMember(members.getMemberList().get(members.getMemberList().size()-1));
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -88,7 +88,7 @@ public class Registry {
 	public void addBoat(Boat.boatType type, double size) {
 		currentMember.addBoat(type, size);
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -102,7 +102,7 @@ public class Registry {
 		Boat currentBoat = currentMember.getCurrentBoat();
 		currentMember.updateBoat(currentBoat, type, size);
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -113,7 +113,7 @@ public class Registry {
 	public void removeBoat () {
 		currentMember.removeBoat(currentMember.getCurrentBoat());
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,7 +130,7 @@ public class Registry {
 			currentMember = null;
 		}
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -144,7 +144,7 @@ public class Registry {
 	public void updateMember (String name, String personnumber) throws ParseException {
 		members.updateMember(currentMember, name, personnumber);
 		try {
-			fileUtil.saveRegistry(members, file);
+			dao.saveRegistry(members, file);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
