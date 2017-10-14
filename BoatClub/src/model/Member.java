@@ -28,7 +28,7 @@ public class Member {
 	@XmlElement(name = "BoatNum")
 	private int numberOfBoats;
 	@XmlElement(name = "BoatList")
-	private List<Boat> boatList = new ArrayList<Boat>();
+	private List<Boat> boatList = new ArrayList<Boat>();;
 
 	public Member(String name, String personnumber, int memberId) throws ParseException {
 		this.name = name;
