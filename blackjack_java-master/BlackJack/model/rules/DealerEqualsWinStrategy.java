@@ -14,7 +14,7 @@ public class DealerEqualsWinStrategy implements IWinStrategy{
 			return true;
 		}
 		//Has dealer gone over 21?
-		else if (a_dealer.CalcScore() > a_dealer.getMaxScore()) {
+		else if (a_dealer.CalcScore() > a_player.getMaxScore()) {
 			return false;
 		}
 		
