@@ -32,11 +32,11 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public boolean Stand() {
+	public boolean Stand() { //Method for Stand added
 		if (m_deck != null) {
 			ShowHand();
 			while (m_hitRule.DoHit(this)) {
-				dealCard(this, true);
+				GiveCard(this, true);
 			}
 			return true;
 		}
@@ -71,14 +71,14 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public void dealCard(Player a_player, boolean a_shown) {
+	public void GiveCard(Player a_player, boolean a_shown) { 
 		Card c = m_deck.GetCard();
 		c.Show(a_shown);
 		a_player.DealCard(c);
 	}
 
-	public void dealCard(Player a_player) {
-		dealCard(a_player, true);
+	public void GiveCard(Player a_player) {
+		GiveCard(a_player, true);
 	}
 
 }

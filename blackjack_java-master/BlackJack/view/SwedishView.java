@@ -9,22 +9,42 @@ public class SwedishView implements IView
 
             System.out.println("Hej Black Jack Världen");
             System.out.println("----------------------");
-            System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
+            System.out.println("Skriv 'p' för att Spela, 'k' för nytt kort, 's' för att stanna 'a' för att avsluta\n");
         }
         
-        public int GetInput()
+        public PlayerState GetInput()
         {
-          try {
-            int c = System.in.read();
-            while (c == '\r' || c =='\n') {
-              c = System.in.read();
-            }
-            return c;
-          } catch (java.io.IOException e) {
-            System.out.println("" + e);
-            return 0;
-          }
-        }
+        	 try
+             {
+                 int c = System.in.read();
+                 while (c == '\r' || c =='\n')
+                 {
+                     c = System.in.read();
+                 }
+                 if(c == 'p')
+                 {
+                     return PlayerState.Play;
+                 }
+                 else if(c=='k')
+                 {
+                     return PlayerState.Hit;
+                 }
+                 else if(c=='s')
+                 {
+                     return PlayerState.Stand;
+                 }
+                 else if(c=='a')
+                 {
+                     return PlayerState.Quit;
+                 }
+             }
+             catch (java.io.IOException e)
+             {
+                 System.out.println("" + e);
+             }
+             return null;
+         }
+     
         
         public void DisplayCard(BlackJack.model.Card a_card)
         {
