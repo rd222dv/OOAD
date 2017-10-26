@@ -5,3 +5,6 @@
 /InternationalNewGameStrategy.class
 /RulesFactory.class
 /Soft17HitStrategy.class
+/IWinStrategy.class
+/BasicWinStrategy.class
+/DealerEqualsWinStrategy.class
