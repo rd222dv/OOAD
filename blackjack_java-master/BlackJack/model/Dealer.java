@@ -71,7 +71,7 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public void GiveCard(Player a_player, boolean a_shown) { 
+	public void GiveCard(Player a_player, boolean a_shown) {//added
 		Card c = m_deck.GetCard();
 		c.Show(a_shown);
 		a_player.DealCard(c);

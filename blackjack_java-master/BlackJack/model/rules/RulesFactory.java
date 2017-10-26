@@ -10,7 +10,7 @@ public class RulesFactory {
 		return new AmericanNewGameStrategy();
 	}
 
-	public IHitStrategy GetSoft17Rule() { //Soft17 added
+	public IHitStrategy GetSoft17Rule() { // Soft17 added
 		return new Soft17HitStrategy();
 	}
 }
