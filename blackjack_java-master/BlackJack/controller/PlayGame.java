@@ -13,7 +13,6 @@ public class PlayGame implements Observer {
 		this.game = a_game;
 		this.view = a_view;
 		this.game.AddSubscriber(this);
-		view.DisplayWelcomeMessage();
 	}
 
 	public boolean Play() {
