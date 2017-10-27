@@ -4,6 +4,8 @@ public interface IView {
 	void DisplayWelcomeMessage();
 
 	public PlayerState GetInput();
+	
+	void InsertRow();
 
 	void DisplayCard(BlackJack.model.Card a_card);
 

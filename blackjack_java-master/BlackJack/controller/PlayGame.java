@@ -58,6 +58,7 @@ public class PlayGame implements Observer {
 		if (game.IsGameOver()) {
 			view.DisplayGameOver(game.IsDealerWinner());
 		}
+		view.InsertRow();
 		view.DisplayDealerHand(game.GetDealerHand(), game.GetDealerScore());
 		view.DisplayPlayerHand(game.GetPlayerHand(), game.GetPlayerScore());
 
