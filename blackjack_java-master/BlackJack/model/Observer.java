@@ -1,6 +1,6 @@
 package BlackJack.model;
 
-public interface Observer {
+public interface IObserver {
 	
 	void DealNewCard(); 	
 }
