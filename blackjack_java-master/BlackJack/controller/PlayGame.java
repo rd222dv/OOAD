@@ -4,33 +4,35 @@ import BlackJack.view.IView;
 import BlackJack.model.Game;
 
 public class PlayGame {
+	
+	Game game;
+	IView view;
+	
+	public PlayGame(Game a_game, IView a_view) {
+		this.game = a_game;
+		this.view = a_view;
+	}
 
-  public boolean Play(Game a_game, IView a_view) {
-    a_view.DisplayWelcomeMessage();
-    
-    a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-    a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+	public boolean Play() {
+		view.DisplayWelcomeMessage();
 
-    if (a_game.IsGameOver())
-    {
-        a_view.DisplayGameOver(a_game.IsDealerWinner());
-    }
+		view.DisplayDealerHand(game.GetDealerHand(), game.GetDealerScore());
+		view.DisplayPlayerHand(game.GetPlayerHand(), game.GetPlayerScore());
 
-    int input = a_view.GetInput();
-    
-    if (input == 'p')
-    {
-        a_game.NewGame();
-    }
-    else if (input == 'h')
-    {
-        a_game.Hit();
-    }
-    else if (input == 's')
-    {
-        a_game.Stand();
-    }
+		if (game.IsGameOver()) {
+			view.DisplayGameOver(game.IsDealerWinner());
+		}
 
-    return input != 'q';
-  }
+		int input = view.GetInput();
+
+		if (input == 'p') {
+			game.NewGame();
+		} else if (input == 'h') {
+			game.Hit();
+		} else if (input == 's') {
+			game.Stand();
+		}
+
+		return input != 'q';
+	}
 }
