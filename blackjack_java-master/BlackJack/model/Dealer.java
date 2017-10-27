@@ -47,7 +47,7 @@ public class Dealer extends Player {
 			c = m_deck.GetCard();
 			c.Show(true);
 
-			a_player.AddToHand(c);
+			a_player.DealCard(c);
 
 			return true;
 		}
@@ -83,7 +83,7 @@ public class Dealer extends Player {
 	public void GiveCard(Player a_player, boolean a_shown) {// added
 		Card c = m_deck.GetCard();
 		c.Show(a_shown);
-		a_player.AddToHand(c);
+		a_player.DealCard(c);
 		//notifier that card is dealt
 		for (Observer subscriber : m_subscribers) {
 			subscriber.DealNewCard();
