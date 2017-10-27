@@ -1,16 +1,18 @@
 package BlackJack.controller;
 
 import BlackJack.view.IView;
+import BlackJack.view.IView.PlayerState;
 import BlackJack.model.Game;
+import BlackJack.model.Observer;
 
-public class PlayGame {
-	
+public class PlayGame implements Observer {
 	Game game;
 	IView view;
-	
+
 	public PlayGame(Game a_game, IView a_view) {
 		this.game = a_game;
 		this.view = a_view;
+		this.game.AddSubscriber(this);
 	}
 
 	public boolean Play() {
@@ -23,16 +25,43 @@ public class PlayGame {
 			view.DisplayGameOver(game.IsDealerWinner());
 		}
 
-		int input = view.GetInput();
+		PlayerState input = view.GetInput();
 
-		if (input == 'p') {
+		switch (input) {
+		case Play:
 			game.NewGame();
-		} else if (input == 'h') {
-			game.Hit();
-		} else if (input == 's') {
-			game.Stand();
-		}
+			break;
 
-		return input != 'q';
+		case Stand:
+			game.Stand();
+			break;
+
+		case Hit:
+			game.Hit();
+			break;
+
+		case Quit:
+			return false;
+
+		}
+		return true;
+	}
+
+	@Override
+	public void DealNewCard() {
+
+		try {
+			Thread.sleep(2500);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
+		if (game.IsGameOver()) {
+			view.DisplayGameOver(game.IsDealerWinner());
+		}
+		view.InsertRow();
+		view.DisplayDealerHand(game.GetDealerHand(), game.GetDealerScore());
+		view.DisplayPlayerHand(game.GetPlayerHand(), game.GetPlayerScore());
+
 	}
 }
+

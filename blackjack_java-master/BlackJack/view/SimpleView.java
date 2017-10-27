@@ -3,25 +3,36 @@ package BlackJack.view;
 public class SimpleView implements IView {
 
 	public void DisplayWelcomeMessage() {
-		for (int i = 0; i < 50; i++) {
-			System.out.print("\n");
-		}
-		;
+		this.InsertRow();
 		System.out.println("Hello Black Jack World");
 		System.out.println("Type 'p' to Play, 'h' to Hit, 's' to Stand or 'q' to Quit\n");
 	}
+	
+	public void InsertRow(){
+		for (int i = 0; i < 50; i++) {
+			System.out.print("\n");
+		}
+	}
+	public PlayerState GetInput() {
 
-	public int GetInput() {
 		try {
 			int c = System.in.read();
 			while (c == '\r' || c == '\n') {
 				c = System.in.read();
 			}
-			return c;
+			if (c == 'p') {
+				return PlayerState.Play;
+			} else if (c == 'h') {
+				return PlayerState.Hit;
+			} else if (c == 's') {
+				return PlayerState.Stand;
+			} else if (c == 'q') {
+				return PlayerState.Quit;
+			}
 		} catch (java.io.IOException e) {
 			System.out.println("" + e);
-			return 0;
 		}
+		return null;
 	}
 
 	public void DisplayCard(BlackJack.model.Card a_card) {

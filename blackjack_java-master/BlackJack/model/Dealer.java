@@ -1,5 +1,7 @@
 package BlackJack.model;
 
+import java.util.ArrayList;
+
 import BlackJack.model.rules.*;
 
 public class Dealer extends Player {
@@ -7,16 +9,13 @@ public class Dealer extends Player {
 	private Deck m_deck;
 	private INewGameStrategy m_newGameRule;
 	private IHitStrategy m_hitRule;
+	private ArrayList<Observer> m_subscribers;
 
 	public Dealer(RulesFactory a_rulesFactory) {
 
 		m_newGameRule = a_rulesFactory.GetNewGameRule();
 		m_hitRule = a_rulesFactory.GetHitRule();
-
-		/*
-		 * for(Card c : m_deck.GetCards()) { c.Show(true); System.out.println("" +
-		 * c.GetValue() + " of " + c.GetColor()); }
-		 */
+		m_subscribers = new ArrayList<Observer>();
 	}
 
 	public boolean NewGame(Player a_player) {
@@ -29,24 +28,27 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public boolean Hit(Player a_player) {
-		if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-			Card c;
-			c = m_deck.GetCard();
-			c.Show(true);
-			a_player.DealCard(c);
 
+	public boolean Stand() { // Method for Stand added
+		if (m_deck != null) {
+			ShowHand();
+			while (m_hitRule.DoHit(this)) {
+				GiveCard(this, true);
+			}
 			return true;
 		}
 		return false;
 	}
 
-	public boolean Stand() {
-		if (m_deck != null) {
-			ShowHand();
-			while (m_hitRule.DoHit(this)) {
-				dealCard(this, true);
-			}
+
+	public boolean Hit(Player a_player) {
+		if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
+			Card c;
+			c = m_deck.GetCard();
+			c.Show(true);
+
+			a_player.AddToHand(c);
+
 			return true;
 		}
 		return false;
@@ -74,4 +76,21 @@ public class Dealer extends Player {
 		return false;
 	}
 
+	public void AddSubscriber(Observer subscriber) {
+		this.m_subscribers.add(subscriber);
+	}
+
+	public void GiveCard(Player a_player, boolean a_shown) {// added
+		Card c = m_deck.GetCard();
+		c.Show(a_shown);
+		a_player.AddToHand(c);
+		//notifier that card is dealt
+		for (Observer subscriber : m_subscribers) {
+			subscriber.DealNewCard();
+		}
+	}
+
+	public void GiveCard(Player a_player) {
+		GiveCard(a_player, true);
+	}
 }

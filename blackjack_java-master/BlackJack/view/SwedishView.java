@@ -2,28 +2,37 @@ package BlackJack.view;
 
 public class SwedishView implements IView {
 	public void DisplayWelcomeMessage() {
-
+		
+		this.InsertRow();
+		System.out.println("Hej Black Jack Världen");
+		System.out.println("----------------------");
+		System.out.println("Skriv 'p' för att Spela, 'k' för nytt kort, 's' för att stanna 'a' för att avsluta\n");
+	}
+	
+	public void InsertRow(){
 		for (int i = 0; i < 50; i++) {
 			System.out.print("\n");
 		}
-		;
-
-		System.out.println("Hej Black Jack Världen");
-		System.out.println("----------------------");
-		System.out.println("Skriv 'p' för att Spela, 'h' för nytt kort, 's' för att stanna 'q' för att avsluta\n");
 	}
-
-	public int GetInput() {
+	public PlayerState GetInput() {
 		try {
 			int c = System.in.read();
 			while (c == '\r' || c == '\n') {
 				c = System.in.read();
 			}
-			return c;
+			if (c == 'p') {
+				return PlayerState.Play;
+			} else if (c == 'k') {
+				return PlayerState.Hit;
+			} else if (c == 's') {
+				return PlayerState.Stand;
+			} else if (c == 'a') {
+				return PlayerState.Quit;
+			}
 		} catch (java.io.IOException e) {
 			System.out.println("" + e);
-			return 0;
 		}
+		return null;
 	}
 
 	public void DisplayCard(BlackJack.model.Card a_card) {
@@ -31,11 +40,12 @@ public class SwedishView implements IView {
 			System.out.println("Dolt Kort");
 		} else {
 			String colors[] = { "Hjärter", "Spader", "Ruter", "Klöver" };
-			String values[] = { "två", "tre", "fyra", "fem", "sex", "sju", "åtta", "nio", "tio", "knekt", "dam", "kung",
-					"ess" };
+			String values[] = { "två", "tre", "fyra", "fem", "sex", "sju", "åtta", "nio", "tio", "knekt", "dam",
+					"kung", "ess" };
 			System.out.println("" + colors[a_card.GetColor().ordinal()] + " " + values[a_card.GetValue().ordinal()]);
 		}
 	}
+
 
 	public void DisplayPlayerHand(Iterable<BlackJack.model.Card> a_hand, int a_score) {
 		DisplayHand("Spelare", a_hand, a_score);
