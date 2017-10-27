@@ -12,8 +12,12 @@ public class Player {
 
 		m_hand = new LinkedList<Card>();
 	}
+	
+	public int getMaxScore() {
+		return g_maxScore;
+	}
 
-	public void AddToHand(Card a_addToHand) {
+	public void DealCard(Card a_addToHand) {
 		m_hand.add(a_addToHand);
 	}
 
@@ -59,3 +63,4 @@ public class Player {
 		return score;
 	}
 }
+

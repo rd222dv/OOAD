@@ -11,7 +11,7 @@ class InternationalNewGameStrategy implements INewGameStrategy {
 		a_dealer.GiveCard(a_player);
 		a_dealer.GiveCard(a_dealer);
 		a_dealer.GiveCard(a_player);
-		
+
 		return true;
 	}
 }

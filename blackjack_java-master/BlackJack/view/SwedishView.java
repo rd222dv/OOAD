@@ -46,6 +46,7 @@ public class SwedishView implements IView {
 		}
 	}
 
+
 	public void DisplayPlayerHand(Iterable<BlackJack.model.Card> a_hand, int a_score) {
 		DisplayHand("Spelare", a_hand, a_score);
 	}

@@ -14,6 +14,7 @@ public class SimpleView implements IView {
 		}
 	}
 	public PlayerState GetInput() {
+
 		try {
 			int c = System.in.read();
 			while (c == '\r' || c == '\n') {

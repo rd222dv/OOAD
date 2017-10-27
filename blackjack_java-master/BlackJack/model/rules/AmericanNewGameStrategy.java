@@ -13,7 +13,6 @@ class AmericanNewGameStrategy implements INewGameStrategy {
 		a_dealer.GiveCard(a_player);
 		a_dealer.GiveCard(a_dealer, false); // the last dealer card is hidden
 											// from start
-
 		return true;
 	}
 }

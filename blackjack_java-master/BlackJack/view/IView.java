@@ -3,6 +3,7 @@ package BlackJack.view;
 public interface IView {
 	void DisplayWelcomeMessage();
 
+
 	public PlayerState GetInput();
 	
 	void InsertRow();
@@ -18,4 +19,5 @@ public interface IView {
 	public enum PlayerState {
 		Play, Hit, Stand, Quit;
 	}
+
 }

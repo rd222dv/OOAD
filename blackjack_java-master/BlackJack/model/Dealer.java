@@ -28,6 +28,7 @@ public class Dealer extends Player {
 		return false;
 	}
 
+
 	public boolean Stand() { // Method for Stand added
 		if (m_deck != null) {
 			ShowHand();
@@ -39,11 +40,13 @@ public class Dealer extends Player {
 		return false;
 	}
 
+
 	public boolean Hit(Player a_player) {
 		if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
 			Card c;
 			c = m_deck.GetCard();
 			c.Show(true);
+
 			a_player.AddToHand(c);
 
 			return true;
@@ -58,6 +61,12 @@ public class Dealer extends Player {
 			return false;
 		}
 		return CalcScore() >= a_player.CalcScore();
+	}
+
+	public void dealCard(Player a_player, boolean a_shown) {
+		Card c = m_deck.GetCard();
+		c.Show(a_shown);
+		a_player.DealCard(c);
 	}
 
 	public boolean IsGameOver() {
@@ -84,5 +93,4 @@ public class Dealer extends Player {
 	public void GiveCard(Player a_player) {
 		GiveCard(a_player, true);
 	}
-
 }

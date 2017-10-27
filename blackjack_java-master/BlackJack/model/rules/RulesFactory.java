@@ -1,6 +1,10 @@
 package BlackJack.model.rules;
 
 public class RulesFactory {
+	
+	public IWinStrategy GetWinRule() {
+		return new BasicWinStrategy();
+	}
 
 	public IHitStrategy GetHitRule() {
 		return new BasicHitStrategy();
@@ -13,4 +17,5 @@ public class RulesFactory {
 	public IHitStrategy GetSoft17Rule() { // Soft17 added
 		return new Soft17HitStrategy();
 	}
+
 }
