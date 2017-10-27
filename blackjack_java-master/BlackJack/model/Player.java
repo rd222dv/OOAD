@@ -17,8 +17,13 @@ public class Player {
 		return g_maxScore;
 	}
 
-	public void DealCard(Card a_addToHand) {
+	public void DealCard(Card a_addToHand, boolean show) {
+		showCard(a_addToHand, show);
 		m_hand.add(a_addToHand);
+	}
+	
+	public void showCard(Card c, boolean show) {
+		c.Show(show);
 	}
 
 	public Iterable<Card> GetHand() {

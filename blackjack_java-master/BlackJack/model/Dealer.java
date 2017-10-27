@@ -43,11 +43,7 @@ public class Dealer extends Player {
 
 	public boolean Hit(Player a_player) {
 		if (m_deck != null && a_player.CalcScore() < g_maxScore && !IsGameOver()) {
-			Card c;
-			c = m_deck.GetCard();
-			c.Show(true);
-
-			a_player.DealCard(c);
+			a_player.DealCard(m_deck.GetCard(), true);
 
 			return true;
 		}
@@ -64,9 +60,7 @@ public class Dealer extends Player {
 	}
 
 	public void dealCard(Player a_player, boolean a_shown) {
-		Card c = m_deck.GetCard();
-		c.Show(a_shown);
-		a_player.DealCard(c);
+		a_player.DealCard(m_deck.GetCard(), a_shown);
 	}
 
 	public boolean IsGameOver() {
@@ -81,9 +75,7 @@ public class Dealer extends Player {
 	}
 
 	public void GiveCard(Player a_player, boolean a_shown) {// added
-		Card c = m_deck.GetCard();
-		c.Show(a_shown);
-		a_player.DealCard(c);
+		a_player.DealCard(m_deck.GetCard(), a_shown);
 		//notifier that card is dealt
 		for (Observer subscriber : m_subscribers) {
 			subscriber.DealNewCard();
