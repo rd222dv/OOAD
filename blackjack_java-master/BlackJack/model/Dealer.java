@@ -1,5 +1,7 @@
 package BlackJack.model;
 
+import java.util.ArrayList;
+
 import BlackJack.model.rules.*;
 
 public class Dealer extends Player {
@@ -7,18 +9,16 @@ public class Dealer extends Player {
 	private Deck m_deck;
 	private INewGameStrategy m_newGameRule;
 	private IHitStrategy m_hitRule;
+	private ArrayList<Observer> m_subscribers;
 
 	public Dealer(RulesFactory a_rulesFactory) {
 
 		m_newGameRule = a_rulesFactory.GetNewGameRule();
 		m_hitRule = a_rulesFactory.GetHitRule();
-
+		m_subscribers = new ArrayList<Observer>();
 		/*
-		 * for(Card c : m_deck.GetCards()) { 
-		 * c.Show(true); 
-		 * System.out.println(""+ c.GetValue() 
-		 * + " of " + c.GetColor()); 
-		 * }
+		 * for(Card c : m_deck.GetCards()) { c.Show(true);
+		 * System.out.println(""+ c.GetValue() + " of " + c.GetColor()); }
 		 */
 	}
 
@@ -32,7 +32,7 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public boolean Stand() { //Method for Stand added
+	public boolean Stand() { // Method for Stand added
 		if (m_deck != null) {
 			ShowHand();
 			while (m_hitRule.DoHit(this)) {
@@ -48,7 +48,7 @@ public class Dealer extends Player {
 			Card c;
 			c = m_deck.GetCard();
 			c.Show(true);
-			a_player.DealCard(c);
+			a_player.AddToHand(c);
 
 			return true;
 		}
@@ -71,10 +71,18 @@ public class Dealer extends Player {
 		return false;
 	}
 
-	public void GiveCard(Player a_player, boolean a_shown) {//added
+	public void AddSubscriber(Observer subscriber) {
+		this.m_subscribers.add(subscriber);
+	}
+
+	public void GiveCard(Player a_player, boolean a_shown) {// added
 		Card c = m_deck.GetCard();
 		c.Show(a_shown);
-		a_player.DealCard(c);
+		a_player.AddToHand(c);
+		//notifier that card is dealt
+		for (Observer subscriber : m_subscribers) {
+			subscriber.DealNewCard();
+		}
 	}
 
 	public void GiveCard(Player a_player) {

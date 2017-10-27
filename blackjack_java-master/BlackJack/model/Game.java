@@ -45,5 +45,8 @@ public class Game {
 	public int GetPlayerScore() {
 		return m_player.CalcScore();
 	}
-
+	public void AddSubscriber(Observer a_subscriber) {
+		m_dealer.AddSubscriber(a_subscriber); 
+		
+	}
 }

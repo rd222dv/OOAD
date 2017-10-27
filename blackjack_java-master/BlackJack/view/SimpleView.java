@@ -1,6 +1,6 @@
 package BlackJack.view;
 
-public class SimpleView extends Observer implements IView {
+public class SimpleView implements IView {
 
 	public void DisplayWelcomeMessage() {
 		for (int i = 0; i < 50; i++) {

@@ -1,42 +1,44 @@
 package BlackJack.controller;
 
 import BlackJack.view.IView;
-import BlackJack.view.Observer;
 import BlackJack.view.IView.PlayerState;
 import BlackJack.model.Game;
+import BlackJack.model.Observer;
 
-public class PlayGame extends Observer {
-	private Game a_game;
-	private IView a_view;
+public class PlayGame implements Observer {
+	Game game;
+	IView view;
 
 	public PlayGame(Game a_game, IView a_view) {
-		this.a_game = a_game;
-		this.a_view = a_view;
+		this.game = a_game;
+		this.view = a_view;
+		this.game.AddSubscriber(this);
+		view.DisplayWelcomeMessage();
 	}
 
-	public boolean Play(Game a_game, IView a_view) {
-		a_view.DisplayWelcomeMessage();
+	public boolean Play() {
+		view.DisplayWelcomeMessage();
 
-		a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-		a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
+		view.DisplayDealerHand(game.GetDealerHand(), game.GetDealerScore());
+		view.DisplayPlayerHand(game.GetPlayerHand(), game.GetPlayerScore());
 
-		if (a_game.IsGameOver()) {
-			a_view.DisplayGameOver(a_game.IsDealerWinner());
+		if (game.IsGameOver()) {
+			view.DisplayGameOver(game.IsDealerWinner());
 		}
 
-		PlayerState input = a_view.GetInput();
+		PlayerState input = view.GetInput();
 
 		switch (input) {
 		case Play:
-			a_game.NewGame();
+			game.NewGame();
 			break;
 
 		case Stand:
-			a_game.Stand();
+			game.Stand();
 			break;
 
 		case Hit:
-			a_game.Hit();
+			game.Hit();
 			break;
 
 		case Quit:
@@ -46,16 +48,19 @@ public class PlayGame extends Observer {
 		return true;
 	}
 
+	@Override
 	public void DealNewCard() {
-
-		a_view.DisplayDealerHand(a_game.GetDealerHand(), a_game.GetDealerScore());
-		a_view.DisplayPlayerHand(a_game.GetPlayerHand(), a_game.GetPlayerScore());
 
 		try {
 			Thread.sleep(2500);
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+		if (game.IsGameOver()) {
+			view.DisplayGameOver(game.IsDealerWinner());
+		}
+		view.DisplayDealerHand(game.GetDealerHand(), game.GetDealerScore());
+		view.DisplayPlayerHand(game.GetPlayerHand(), game.GetPlayerScore());
 
 	}
 }

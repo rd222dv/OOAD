@@ -11,10 +11,9 @@ public class Player {
 	public Player() {
 
 		m_hand = new LinkedList<Card>();
-		System.out.println("Hello List World");
 	}
 
-	public void DealCard(Card a_addToHand) {
+	public void AddToHand(Card a_addToHand) {
 		m_hand.add(a_addToHand);
 	}
 
