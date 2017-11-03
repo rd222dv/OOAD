@@ -2,7 +2,7 @@ package model;
 
 import java.io.File;
 import java.text.ParseException;
-import java.util.List;
+import java.util.Iterator;
 
 public class Registry {
 	
@@ -42,20 +42,42 @@ public class Registry {
 		return currentMember;
 	}
 	
-	public List<Member> getMemberList() {
+	public Member getSelectedMember(int choice) {
+		for (Member m : members.getMemberList()) {
+			if (m.getMemberId() == choice) {
+				return m;
+			}
+		}
+		return null;
+	}
+	
+	public Boat getSelectedBoat(int choice) {
+		for (Boat b : currentMember.getBoatList()) {
+			if (b.getId() == choice) {
+				return b;
+			}
+		}
+		return null;
+	}
+	
+	public Iterable<Member> getMemberList() {
 		return members.getMemberList();
 	}
 	
-	public List<Boat> getBoatList() {
+	public Iterable<Boat> getBoatList() {
 		return currentMember.getBoatList();
 	}
 	
+	public int getBoatListSize() {
+		return currentMember.getBoatListSize();
+	}
+	
 	public boolean isEmptyMembers() {
-		return getMemberList().isEmpty();
+		return members.isMembersEmpty();
 	}
 	
 	public boolean isEmptyBoats() {
-		return currentMember.getBoatList().isEmpty();
+		return currentMember.isBoatsEmpty();
 	}
 	
 	public void setCurrentBoat(Boat boat) {
@@ -73,7 +95,7 @@ public class Registry {
 	 */
 	public void addMember(String name, String personnumber) throws ParseException {
 		members.addMember(name, personnumber);
-		setCurrentMember(members.getMemberList().get(members.getMemberList().size()-1));
+		setCurrentMember(getLastMember());
 		try {
 			dao.saveRegistry(members, file);
 		} catch (Exception e) {
@@ -124,7 +146,7 @@ public class Registry {
 	public void removeMember () {
 		members.removeMember(currentMember);
 		if (!isEmptyMembers()) {
-			currentMember = getMemberList().get(getMemberList().size()-1);
+			currentMember = getLastMember();
 		}
 		else {
 			currentMember = null;
@@ -148,5 +170,19 @@ public class Registry {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**'
+	 * Helper method to get the very last member of members list
+	 * @return Last member of member's list
+	 */
+	private Member getLastMember() {
+		Iterator<Member> it = getMemberList().iterator();
+		Member lastMember = null;
+		while (it.hasNext()) {
+			lastMember = it.next();
+		}
+		
+		return lastMember;
 	}
 }

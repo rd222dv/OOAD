@@ -7,7 +7,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "Boat")
-@XmlType(propOrder = {"type", "size"})
+@XmlType(propOrder = {"type", "size", "id"})
 @XmlAccessorType(XmlAccessType.FIELD)
 public class Boat {
 
@@ -15,6 +15,8 @@ public class Boat {
 	private boatType type;
 	@XmlElement(name = "BoatSize")
 	private double size;
+	@XmlElement(name = "BoatId")
+	private int id;
 
 	public enum boatType {
 		SAILBOAT, MOTORSAILER, CANOE, OTHER
@@ -23,9 +25,10 @@ public class Boat {
 	public Boat() {
 	}
 
-	public Boat(boatType type, double size) {
+	public Boat(boatType type, double size, int id) {
 		this.type = type;
 		this.size = size;
+		this.id = id;
 	}
 
 	public double getSize() {
@@ -42,6 +45,14 @@ public class Boat {
 
 	public void setType(boatType type) {
 		this.type = type;
+	}
+	
+	public int getId() {
+		return id;
+	}
+	
+	public void setId(int i) {
+		this.id = i;
 	}
 
 }

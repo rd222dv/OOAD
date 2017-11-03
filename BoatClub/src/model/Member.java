@@ -80,17 +80,27 @@ public class Member {
 		return currentBoat;
 	}
 	
-	public List<Boat> getBoatList() {
+	public boolean isBoatsEmpty() {
+		return boatList.size() == 0;
+	}
+	
+	public int getBoatListSize() {
+		return boatList.size();
+	}
+	
+	public Iterable<Boat> getBoatList() {
 		return boatList;
 	}
 	
 	public void addBoat(Boat.boatType type, double size) {
-		boatList.add(new Boat(type, size));
+		int id = boatList.size() - 1;
+		boatList.add(new Boat(type, size, id));
 	}
 
 	public void updateBoat(Boat currentBoat, Boat.boatType type, double size) {
+		int id = currentBoat.getId();
 		boatList.remove(currentBoat);
-		boatList.add(new Boat(type, size));
+		boatList.add(new Boat(type, size, id));
 	}
 
 	public void removeBoat(Boat boat) {

@@ -164,7 +164,7 @@ public class Console {
 	 */
 	private void viewMember(int choice) {
 		// Set the member user is currently working with
-		registry.setCurrentMember(registry.getMemberList().get(choice - 1));
+		registry.setCurrentMember(registry.getSelectedMember(choice));
 		//Member information
 		printMemberInfo();
 		//Presents user with options possible while viewing single member information
@@ -285,7 +285,7 @@ public class Console {
 	 */
 	public void viewBoat(int choice) {
 		//Sets which is the current boat being worked with so registry knows
-		registry.setCurrentBoat(registry.getCurrentMember().getBoatList().get(choice - 1));
+		registry.setCurrentBoat(registry.getSelectedBoat(choice));
 		//Boat information
 		printBoat();
 		//Presents user with options possible while viewing single boat information
@@ -381,8 +381,10 @@ public class Console {
 	 */
 	private void viewBoatList() {
 		System.out.println("Boat list: ");
-		for (int i = 0; i < registry.getBoatList().size(); i++) {
-			System.out.println((i + 1) + " " + toString(registry.getBoatList().get(i)));
+		int i = 0;
+		for (Boat b : registry.getBoatList()) {
+			System.out.println((i + 1) + " " + toString(b));
+			i++;
 		}
 	}
 
@@ -397,10 +399,12 @@ public class Console {
 	 * Prints out compact list
 	 */
 	private void viewCompactList() {
-		for (int i = 0; i < registry.getMemberList().size(); i++) {
-			System.out.println((i + 1) + " Name: " + registry.getMemberList().get(i).getName() + "\t Id Number: "
-					+ registry.getMemberList().get(i).getMemberId() + "\t Number of boats registered: "
-					+ registry.getMemberList().get(i).getNumberOfBoats());
+		int i = 0;
+		for (Member m : registry.getMemberList()) {
+			System.out.println((i + 1) + " Name: " + m.getName() + "\t Id Number: "
+					+ m.getMemberId() + "\t Number of boats registered: "
+					+ m.getNumberOfBoats());
+			i++;
 		}
 	}
 
@@ -408,12 +412,15 @@ public class Console {
 	 * Prints out verbose list
 	 */
 	private void viewVerboseList() {
-		for (int i = 0; i < registry.getMemberList().size(); i++) 
-			System.out.println((i + 1) + " Name: " + registry.getMemberList().get(i).getName() + "\t Personal number: "
-					+ registry.getMemberList().get(i).getPersonnumber() + "\t Id Number: "
-					+ registry.getMemberList().get(i).getMemberId() + "\t Number of boats registered: "
-					+ registry.getMemberList().get(i).getNumberOfBoats() + "\t Boats registered: "
-					+ getBoatList(registry.getMemberList().get(i)));
+		int i = 0;
+		for (Member m : registry.getMemberList()) {
+			System.out.println((i + 1) + " Name: " + m.getName() + "\t Personal number: "
+					+ m.getPersonnumber() + "\t Id Number: "
+					+ m.getMemberId() + "\t Number of boats registered: "
+					+ m.getNumberOfBoats() + "\t Boats registered: "
+					+ getBoatList(m));
+			i++;
+		}
 	}
 	
 	/**
@@ -434,19 +441,19 @@ public class Console {
 	 */
 	private String getBoatList (Member m) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < m.getBoatList().size(); i++) {
+		for (Boat b: registry.getBoatList()) {
 			// Boat list contained only one boat, comma/dot is not needed
-			if (m.getBoatList().size() == 1) {
-				sb.append(toString(m.getBoatList().get(i)));
+			if (m.getBoatListSize() == 1) {
+				sb.append(toString(b));
 			}
 			else {
 				// Boat list has reached an end, have a dot at the end
-				if (i == m.getBoatList().size() -1) { 
-					sb.append(toString(m.getBoatList().get(i)) + ".");
+				if (!registry.getBoatList().iterator().hasNext()) { 
+					sb.append(toString(b) + ".");
 				}
 				// Boat list is still going on
 				else {
-					sb.append(toString(m.getBoatList().get(i)) + ", ");
+					sb.append(toString(b) + ", ");
 				}
 			}
 		}

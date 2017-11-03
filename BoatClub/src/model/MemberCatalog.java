@@ -24,8 +24,16 @@ public class MemberCatalog {
 		
 	}
 
-	public List<Member> getMemberList() {
+	public Iterable<Member> getMemberList() {
 		return memberList;
+	}
+	
+	public int membersSize() {
+		return memberList.size();
+	}
+	
+	public boolean isMembersEmpty() {
+		return memberList.size() == 0;
 	}
 
 	public void setMemberList(ArrayList<Member> memberCatalog) {
@@ -33,7 +41,7 @@ public class MemberCatalog {
 	}
 	
 	public void addMember(String name, String personnumber) throws ParseException {
-		int id = getMemberList().size() + 1;
+		int id = memberList.size() + 1;
 		this.memberList.add(new Member(name, personnumber,  id));
 	}
 
