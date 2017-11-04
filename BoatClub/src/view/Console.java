@@ -338,32 +338,7 @@ public class Console {
 	 * Handles what happens when "Edit boat" is selected". Similar to "Add boat"
 	 */
 	public void editBoatWindow() {
-		System.out.println("Please input boat type (Sailboat, Motorsailer, Canoe, Other)");
-		System.out.print("\n>");
-		//Takes input of boat type
-		String type = sc.next();
-		//Checks if selected type is valid
-		if (errorHandler.isValidType(type)) {
-			System.out.println("Please input boat size");
-			System.out.print("\n>");
-			//Takes input of boat size
-			String size = sc.next();
-			//Checks if boat size input was valid
-			if (errorHandler.isInteger(size)) {
-				//Edits boat, prints out successful message, goes back to boat list window
-				registry.addBoat(Boat.boatType.valueOf(type.toLowerCase()), Double.parseDouble(size));
-				System.out.println("Boat successfully modified!");
-				viewBoatListWindow();
-			} else {
-				//Handles incorrect size input, restarts edit boat
-				System.out.println("Please input a boat size as an integer!");
-				editBoatWindow();
-			}
-		} else {
-			//Handles incorrect type input, restarts edit boat
-			System.out.println("Please chose one of the existing options!");
-			editBoatWindow();
-		}
+		addBoatWindow();
 	}
 
 	/**
