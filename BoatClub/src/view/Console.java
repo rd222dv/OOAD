@@ -1,6 +1,7 @@
 package view;
 
 import java.text.ParseException;
+import java.util.Iterator;
 import java.util.Scanner;
 
 import model.Boat;
@@ -382,20 +383,14 @@ public class Console {
 	 */
 	private String getBoatList (Member m) {
 		StringBuilder sb = new StringBuilder();
-		for (Boat b: registry.getBoatList()) {
+		registry.setCurrentMember(m);
+		for (Boat b : registry.getBoatList()) {
 			// Boat list contained only one boat, comma/dot is not needed
 			if (m.getBoatListSize() == 1) {
 				sb.append(toString(b));
 			}
 			else {
-				// Boat list has reached an end, have a dot at the end
-				if (!registry.getBoatList().iterator().hasNext()) { 
-					sb.append(toString(b) + ".");
-				}
-				// Boat list is still going on
-				else {
-					sb.append(toString(b) + ", ");
-				}
+					sb.append(toString(b) + " ");
 			}
 		}
 		return sb.toString();
