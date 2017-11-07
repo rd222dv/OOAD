@@ -12,13 +12,15 @@ public class ConsoleOptions {
 	 * @param console object of Console that is being used
 	 * @throws ParseException
 	 */
-	public void welcomeOptions(int selection, Console console) throws ParseException {
+	public void welcomeOptions(int selection, Console console) {
 		if (selection == 1) {
-			console.addMemberWindow();
-		} else if (selection == 2) {
-			console.viewCompactWindow();
-		} else if (selection == 3) {
-			console.viewVerboseWindow();
+			try {
+				console.updateOrAddMember(1);
+			}catch (ParseException e) {
+				
+			}
+		} else if (selection == 2 || selection == 3) {
+			console.viewMembers(selection);
 		} else {
 			System.out.println("Invalid choice! Chose from 1 to 3!");
 			console.welcomeWindow();
@@ -45,10 +47,15 @@ public class ConsoleOptions {
 	 * on what user has chosen. Used when single member is displayed
 	 * @param selection users choice on what should happen next
 	 * @param console object of Console that is being used
+	 * @throws ParseException 
 	 */
 	public void memberOptions(int selection, Console console) {
 		if (selection == 1) {
-			console.updateMemberWindow();
+			try {
+				console.updateOrAddMember(2);
+			}catch (ParseException e) {
+				
+			}
 		} else if (selection == 2) {
 			console.removeMemberWindow();
 		} else if (selection == 3) {
@@ -69,7 +76,7 @@ public class ConsoleOptions {
 	 */
 	public void viewBoatOptions(int selection, Console console) {
 		if (selection == 1) {
-			console.editBoatWindow();
+			console.addOrEditBoatWindow(1);
 		} else if (selection == 2) {
 			console.removeBoatWindow();
 		} else if (selection == 3) {
@@ -89,7 +96,7 @@ public class ConsoleOptions {
 		if (selection == 1) {
 			console.viewBoatWindow();
 		} else if (selection == 2) {
-			console.addBoatWindow();
+			console.addOrEditBoatWindow(2);
 		} else if (selection == 3) {
 			console.viewMemberWindow();
 		} else {
@@ -105,9 +112,9 @@ public class ConsoleOptions {
 	 */
 	public void viewBoatListEmptyOptions(int selection, Console console) {
 		if (selection == 1) {
-			console.addBoatWindow();
+			console.addOrEditBoatWindow(2);
 		} else if (selection == 2) {
-			console.viewMemberWindow();;
+			console.viewMemberWindow();
 		} else {
 			System.out.println("Invalid choice! Try again ");
 			console.viewBoatListWindow();

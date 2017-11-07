@@ -47,11 +47,25 @@ public class MemberCatalog {
 
 	public void updateMember(Member currentMember, String name, String personnumber) throws ParseException { // FIXME not sure if this is enough
 		int id = currentMember.getMemberId();
-		memberList.remove(currentMember);
-		memberList.add(new Member(name, personnumber, id));
+		Member temp = null;
+		for (int i = 0; i < memberList.size(); i++) {
+			if (memberList.get(i).getMemberId() == id) {
+				temp = memberList.get(i);
+			}
+		}
+		temp.setName(name);
+		temp.setPersonnumber(personnumber);
 	}
 
-	public void removeMember(Member member) { 
+	public void removeMember(Member member) {
+		int id = member.getMemberId();
+		int temp = 0;
+		Member tempMem = null;
 		this.memberList.remove(member);
+		for (int i = id-1; i < memberList.size(); i++) {
+			tempMem = memberList.get(i);
+			temp = tempMem.getMemberId();
+			tempMem.setMemberId(temp - 1);
+		}
 	}
 }

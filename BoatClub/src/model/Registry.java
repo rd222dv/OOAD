@@ -54,9 +54,11 @@ public class Registry {
 	public Boat getSelectedBoat(int choice) {
 		for (Boat b : currentMember.getBoatList()) {
 			if (b.getId() == choice) {
+				System.out.println("Choice successfully found!");
 				return b;
 			}
 		}
+		System.out.println("Choice not found!");
 		return null;
 	}
 	

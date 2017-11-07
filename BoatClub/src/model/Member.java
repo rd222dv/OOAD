@@ -93,18 +93,32 @@ public class Member {
 	}
 	
 	public void addBoat(Boat.boatType type, double size) {
-		int id = boatList.size() - 1;
+		int id = boatList.size() + 1;
 		boatList.add(new Boat(type, size, id));
 	}
 
 	public void updateBoat(Boat currentBoat, Boat.boatType type, double size) {
 		int id = currentBoat.getId();
-		boatList.remove(currentBoat);
-		boatList.add(new Boat(type, size, id));
+		Boat temp = null;
+		for (int i = 0; i < boatList.size(); i++) {
+			if (boatList.get(i).getId() == id) {
+				temp = boatList.get(i);
+			}
+		}
+		temp.setSize(size);
+		temp.setType(type);
 	}
 
 	public void removeBoat(Boat boat) {
+		int id = boat.getId();
+		int temp = 0;
+		Boat tempMem = null;
 		boatList.remove(boat);
+		for (int i = id-1; i < boatList.size(); i++) {
+			tempMem = boatList.get(i);
+			temp = tempMem.getId();
+			tempMem.setId(temp - 1);
+		}
 	}
 	
 }
