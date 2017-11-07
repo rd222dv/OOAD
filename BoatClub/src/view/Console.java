@@ -46,7 +46,13 @@ public class Console {
 			welcomeWindow();
 		}
 	}
-	//1 - add, 2 - update
+	/**
+	 * Since add and update methods are so similar, they are merged into one method.
+	 * This method handles displaying text and taking users input when adding or modifying 
+	 * boat club member.
+	 * @param choice 1 - add, 2 - update
+	 * @throws ParseException
+	 */
 	public void updateOrAddMember(int choice) throws ParseException {
 		if (choice == 1) {
 			System.out.println("Create new Member...");

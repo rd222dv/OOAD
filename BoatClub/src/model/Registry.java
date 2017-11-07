@@ -33,7 +33,12 @@ public class Registry {
 	 * @param member Member object that is being worked with
 	 */
 	public void setCurrentMember(Member member) {
-		this.currentMember = member;
+		if (member instanceof model.Member) {
+			this.currentMember = member;
+		}
+		else {
+			throw new RuntimeException ("Make sure to use Member from BoatClub.model package");
+		}
 	}
 	/**
 	 * @returnMember object that is being worked with
@@ -42,30 +47,54 @@ public class Registry {
 		return currentMember;
 	}
 	
+	/**
+	 * Gets member by their ID
+	 * @param choice ID as int
+	 * @return member object as model.Member
+	 */
 	public Member getSelectedMember(int choice) {
-		for (Member m : members.getMemberList()) {
-			if (m.getMemberId() == choice) {
-				return m;
+		Member temp = null;
+		if (choice <= members.membersSize()) {
+			for (Member m : members.getMemberList()) {
+				if (m.getMemberId() == choice) {
+					temp = m;
+				}
 			}
 		}
-		return null;
+		else {
+			throw new RuntimeException("Choice is incorret, such member doesn't exist!");
+		}
+		return temp;
 	}
 	
+	/**
+	 * Gets boat by their ID
+	 * @param choice ID as int
+	 * @return boat object as model.Boat
+	 */
 	public Boat getSelectedBoat(int choice) {
-		for (Boat b : currentMember.getBoatList()) {
-			if (b.getId() == choice) {
-				System.out.println("Choice successfully found!");
-				return b;
+		Boat temp = null;
+		if (choice <= currentMember.getBoatListSize()) {
+			for (Boat b : currentMember.getBoatList()) {
+				if (b.getId() == choice) {
+					temp = b;
+				}
 			}
 		}
-		System.out.println("Choice not found!");
-		return null;
+		else {
+			throw new RuntimeException("Choice is incorret, such boat doesn't exist!");
+		}
+		return temp;
 	}
-	
+	/**
+	 * @return Iterable object of members list from MembersCatalog
+	 */
 	public Iterable<Member> getMemberList() {
 		return members.getMemberList();
 	}
-	
+	/**
+	 * @return Iterable object of boat list from Member 
+	 */
 	public Iterable<Boat> getBoatList() {
 		return currentMember.getBoatList();
 	}
@@ -74,18 +103,36 @@ public class Registry {
 		return currentMember.getBoatListSize();
 	}
 	
+	/**
+	 * @return true if empty
+	 */
 	public boolean isEmptyMembers() {
 		return members.isMembersEmpty();
 	}
 	
+	/**
+	 * @return true if empty
+	 */
 	public boolean isEmptyBoats() {
 		return currentMember.isBoatsEmpty();
 	}
 	
+	/**
+	 * Sets current boat that is being worked on
+	 * @param boat as model.Boat
+	 */
 	public void setCurrentBoat(Boat boat) {
-		currentMember.setCurrentBoat(boat);
+		if (boat instanceof model.Boat) {
+			currentMember.setCurrentBoat(boat);
+		}
+		else {
+			throw new RuntimeException("Make sure to use Boat class of BoatClub.model package");
+		}
 	}
 	
+	/**
+	 * @return Boat object as model.Boat
+	 */
 	public Boat getCurrentBoat() {
 		return currentMember.getCurrentBoat();
 	}
@@ -174,7 +221,7 @@ public class Registry {
 		}
 	}
 	
-	/**'
+	/**
 	 * Helper method to get the very last member of members list
 	 * @return Last member of member's list
 	 */
