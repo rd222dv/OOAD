@@ -13,6 +13,7 @@ public class Console {
 	ConsoleOptions consoleOptions = new ConsoleOptions();
 	ErrorChecker errorHandler = new ErrorChecker();
 	private Registry registry;
+	private int currentChoice = 0;
 
 	public Console() {
 		registry = new Registry();
@@ -37,7 +38,7 @@ public class Console {
 		if (errorHandler.isInteger(input) && errorHandler.isOptionInput(input)) {
 			try {
 				consoleOptions.welcomeOptions(Integer.parseInt(input), this);
-			} catch (NumberFormatException | ParseException e) {
+			} catch (NumberFormatException e) {
 				e.printStackTrace();
 			}
 		} else {
@@ -45,14 +46,20 @@ public class Console {
 			welcomeWindow();
 		}
 	}
-
 	/**
-	 * Shown if user decided to add new member
-	 * 
+	 * Since add and update methods are so similar, they are merged into one method.
+	 * This method handles displaying text and taking users input when adding or modifying 
+	 * boat club member.
+	 * @param choice 1 - add, 2 - update
 	 * @throws ParseException
 	 */
-	public void addMemberWindow() throws ParseException {
-		System.out.println("Create new Member...");
+	public void updateOrAddMember(int choice) throws ParseException {
+		if (choice == 1) {
+			System.out.println("Create new Member...");
+		}
+		else if (choice == 2) {
+			System.out.println("Edit Member...");
+		}
 		System.out.print("Name\n>");
 		// New member can wish to use a username, therefore numbers/characters
 		// allowed
@@ -63,56 +70,41 @@ public class Console {
 		if (errorHandler.isInteger(input)) {
 			if (errorHandler.isTwelveDigits(input)) {
 				//Adds new member, returns to main menu
-				registry.addMember(name, input);
-				System.out.println("New member was added!!");
+				if (choice == 1) {
+					registry.addMember(name, input);
+					System.out.println("New member was added!!");
+				}
+				else if (choice == 2) {
+					registry.updateMember(name, input);
+					System.out.println("Member was successfully updated!");
+				}
 				welcomeWindow();
 			} else {
 				System.out.println("Personnumber has to be 12 digits!");
-				addMemberWindow();
+				updateOrAddMember(choice);
 			}
 		} else {
 			System.out.println("Personnumber has to be integers only!");
-			addMemberWindow();
+			updateOrAddMember(choice);
 		}
 	}
-
 	/**
-	 * Window that displays compact list
+	 * Displays either verbose or compact list, also gives menu options.
+	 * @param choice 2 - compact, 3 - verbose
 	 */
-	public void viewCompactWindow() {
-		System.out.println("Retriving compact list..." + "\n------------------------------");
+	public void viewMembers(int choice) {
 		// Check if memberList is empty
 		if (!registry.isEmptyMembers()) {
-			//Prints out compact list
-			viewCompactList();
-			//Presents user with options possible while viewing the list
-			System.out.println("\n------------------------------" + "\nSelect one of the following choices:"
-					+ "\n 1 View Member" + "\n 2 Return ");
-			System.out.print("\n>");
-			String input = sc.next();
-			if (errorHandler.isInteger(input) && errorHandler.isOptionInput(input)) {
-				consoleOptions.memberListOptions(Integer.parseInt(input), this);
-			} else {
-				System.out.println("Please input a choice number");
-				viewCompactWindow();
+			if (choice == 2) {
+				System.out.println("Retriving compact list..." + "\n------------------------------");
+				//Prints compact list 
+				viewCompactList();
 			}
-		}
-		// Member list was empty
-		else {
-			System.out.println("No members found");
-			welcomeWindow();
-		}
-	}
-
-	/**
-	 * Window for verbose list
-	 */
-	public void viewVerboseWindow() {
-		System.out.println("Retriving verbose list..." + "\n------------------------------");
-		// Check if memberList is empty
-		if (!registry.isEmptyMembers()) {
-			//Prints out verbose list
-			viewVerboseList();
+			else if (choice == 3){
+				System.out.println("Retriving verbose list..." + "\n------------------------------");
+				//Prints out verbose list
+				viewVerboseList();
+			}
 			//Presents user with options possible while viewing the list
 			System.out.println("\n------------------------------" + "\nSelect one of the following choices:"
 					+ "\n 1 View Member" + "\n 2 Return ");
@@ -122,7 +114,7 @@ public class Console {
 				consoleOptions.memberListOptions(Integer.parseInt(input), this);
 			} else {
 				System.out.println("Please input a choice number");
-				viewVerboseList();
+				viewMembers(choice);
 			}
 		}
 		// Member list was empty
@@ -163,8 +155,9 @@ public class Console {
 	 *            member number in the list
 	 */
 	private void viewMember(int choice) {
+		currentChoice = choice;
 		// Set the member user is currently working with
-		registry.setCurrentMember(registry.getMemberList().get(choice - 1));
+		registry.setCurrentMember(registry.getSelectedMember(choice));
 		//Member information
 		printMemberInfo();
 		//Presents user with options possible while viewing single member information
@@ -191,33 +184,6 @@ public class Console {
 				+ registry.getCurrentMember().getPersonnumber() + "\t Number of Boats: "
 				+ registry.getCurrentMember().getNumberOfBoats());
 		viewBoatList();
-	}
-
-	/**
-	 * Window that is displayed when user is updating member, similar to add member
-	 */
-	public void updateMemberWindow() {
-		System.out.print("Name\n>");
-		// New member can wish to use a username, therefore numbers/characters
-		// allowed, no need to check
-		String name = sc.next() + sc.nextLine();
-		System.out.print("Personnumber in format YYYYMMDDXXXX\n>");
-		String input = sc.next();
-		//Checks if person number is correct
-		if (errorHandler.isInteger(input)) {
-			if (errorHandler.isTwelveDigits(input)) {
-				try {
-					registry.updateMember(name, input);
-				} catch (NumberFormatException | ParseException e) {
-					e.printStackTrace();
-				}
-				System.out.println("Member has been updated");
-				welcomeWindow();
-			} else {
-				System.out.println("Personnumber has to be 12 digits!");
-				updateMemberWindow();
-			}
-		}
 	}
 
 	/**
@@ -285,7 +251,7 @@ public class Console {
 	 */
 	public void viewBoat(int choice) {
 		//Sets which is the current boat being worked with so registry knows
-		registry.setCurrentBoat(registry.getCurrentMember().getBoatList().get(choice - 1));
+		registry.setCurrentBoat(registry.getSelectedBoat(choice));
 		//Boat information
 		printBoat();
 		//Presents user with options possible while viewing single boat information
@@ -301,11 +267,12 @@ public class Console {
 			viewBoatWindow();
 		}
 	}
-
 	/**
-	 * Displayed when user has selected to add a boat
+	 * Handles adding and editing boats, since code is so similar, it's merged into
+	 * a single method.
+	 * @param choice 1 for edit boat, 2 for add boat
 	 */
-	public void addBoatWindow() {
+	public void addOrEditBoatWindow(int choice) {
 		System.out.println("Please input boat type (Sailboat, Motorsailer, Canoe, Other)");
 		System.out.print("\n>");
 		//Takes input of boat type
@@ -319,50 +286,24 @@ public class Console {
 			//Checks if boat size input was valid
 			if (errorHandler.isInteger(size)) {
 				//Adds boat, prints out successful message, goes back to main menu
-				registry.addBoat(Boat.boatType.valueOf(type.toUpperCase()), Double.parseDouble(size));
-				System.out.println("Boat successfully added!");
-				welcomeWindow();
+				if (choice == 1) {
+					registry.updateBoat(Boat.boatType.valueOf(type.toUpperCase()), Double.parseDouble(size));
+					System.out.println("Boat successfully modified!");
+				}
+				else {
+					registry.addBoat(Boat.boatType.valueOf(type.toUpperCase()), Double.parseDouble(size));
+					System.out.println("Boat successfully added!");
+				}
+				viewMember(currentChoice);
 			} else {
 				//Handles incorrect size input, restarts add boat
 				System.out.println("Please input a boat size as an integer!");
-				addBoatWindow();
+				addOrEditBoatWindow(choice);
 			}
 		} else {
 			//Handles incorrect type input, restarts add boat
 			System.out.println("Please chose one of the existing options!");
-			addBoatWindow();
-		}
-	}
-
-	/**
-	 * Handles what happens when "Edit boat" is selected". Similar to "Add boat"
-	 */
-	public void editBoatWindow() {
-		System.out.println("Please input boat type (Sailboat, Motorsailer, Canoe, Other)");
-		System.out.print("\n>");
-		//Takes input of boat type
-		String type = sc.next();
-		//Checks if selected type is valid
-		if (errorHandler.isValidType(type)) {
-			System.out.println("Please input boat size");
-			System.out.print("\n>");
-			//Takes input of boat size
-			String size = sc.next();
-			//Checks if boat size input was valid
-			if (errorHandler.isInteger(size)) {
-				//Edits boat, prints out successful message, goes back to boat list window
-				registry.addBoat(Boat.boatType.valueOf(type.toLowerCase()), Double.parseDouble(size));
-				System.out.println("Boat successfully modified!");
-				viewBoatListWindow();
-			} else {
-				//Handles incorrect size input, restarts edit boat
-				System.out.println("Please input a boat size as an integer!");
-				editBoatWindow();
-			}
-		} else {
-			//Handles incorrect type input, restarts edit boat
-			System.out.println("Please chose one of the existing options!");
-			editBoatWindow();
+			addOrEditBoatWindow(choice);
 		}
 	}
 
@@ -381,8 +322,10 @@ public class Console {
 	 */
 	private void viewBoatList() {
 		System.out.println("Boat list: ");
-		for (int i = 0; i < registry.getBoatList().size(); i++) {
-			System.out.println((i + 1) + " " + toString(registry.getBoatList().get(i)));
+		int i = 0;
+		for (Boat b : registry.getBoatList()) {
+			System.out.println((i + 1) + " " + toString(b));
+			i++;
 		}
 	}
 
@@ -397,10 +340,12 @@ public class Console {
 	 * Prints out compact list
 	 */
 	private void viewCompactList() {
-		for (int i = 0; i < registry.getMemberList().size(); i++) {
-			System.out.println((i + 1) + " Name: " + registry.getMemberList().get(i).getName() + "\t Id Number: "
-					+ registry.getMemberList().get(i).getMemberId() + "\t Number of boats registered: "
-					+ registry.getMemberList().get(i).getNumberOfBoats());
+		int i = 0;
+		for (Member m : registry.getMemberList()) {
+			System.out.println((i + 1) + " Name: " + m.getName() + "\t Id Number: "
+					+ m.getMemberId() + "\t Number of boats registered: "
+					+ m.getNumberOfBoats());
+			i++;
 		}
 	}
 
@@ -408,12 +353,15 @@ public class Console {
 	 * Prints out verbose list
 	 */
 	private void viewVerboseList() {
-		for (int i = 0; i < registry.getMemberList().size(); i++) 
-			System.out.println((i + 1) + " Name: " + registry.getMemberList().get(i).getName() + "\t Personal number: "
-					+ registry.getMemberList().get(i).getPersonnumber() + "\t Id Number: "
-					+ registry.getMemberList().get(i).getMemberId() + "\t Number of boats registered: "
-					+ registry.getMemberList().get(i).getNumberOfBoats() + "\t Boats registered: "
-					+ getBoatList(registry.getMemberList().get(i)));
+		int i = 0;
+		for (Member m : registry.getMemberList()) {
+			System.out.println((i + 1) + " Name: " + m.getName() + "\t Personal number: "
+					+ m.getPersonnumber() + "\t Id Number: "
+					+ m.getMemberId() + "\t Number of boats registered: "
+					+ m.getNumberOfBoats() + "\t Boats registered: "
+					+ getBoatList(m));
+			i++;
+		}
 	}
 	
 	/**
@@ -423,7 +371,7 @@ public class Console {
 	 */
 	private String toString(Boat b){
         StringBuilder sb = new StringBuilder();
-        sb.append("Type: " + b.getType() + " - Size: " + b.getSize());
+        sb.append("Type: " + b.getType() + " - Size: " + b.getSize() + " - ID: " + b.getId());
         return sb.toString();
     }
 	
@@ -434,20 +382,14 @@ public class Console {
 	 */
 	private String getBoatList (Member m) {
 		StringBuilder sb = new StringBuilder();
-		for (int i = 0; i < m.getBoatList().size(); i++) {
+		registry.setCurrentMember(m);
+		for (Boat b : registry.getBoatList()) {
 			// Boat list contained only one boat, comma/dot is not needed
-			if (m.getBoatList().size() == 1) {
-				sb.append(toString(m.getBoatList().get(i)));
+			if (m.getBoatListSize() == 1) {
+				sb.append(toString(b));
 			}
 			else {
-				// Boat list has reached an end, have a dot at the end
-				if (i == m.getBoatList().size() -1) { 
-					sb.append(toString(m.getBoatList().get(i)) + ".");
-				}
-				// Boat list is still going on
-				else {
-					sb.append(toString(m.getBoatList().get(i)) + ", ");
-				}
+					sb.append(toString(b) + " ");
 			}
 		}
 		return sb.toString();
